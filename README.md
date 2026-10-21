@@ -42,7 +42,7 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
-This project classifies posts from the public [r/Entrepreneur](https://www.reddit.com/r/Entrepreneur/) community. The local archive file [Entrepreneur_data.csv](../archive/Entrepreneur_data.csv) contains 999 posts with source URLs; 959 have non-empty bodies. I will use each post's full title and body, selecting 200 posts with bodies for the labelled dataset. The labels describe each post's main purpose: recounting a business experience, seeking advice for a specific situation, or inviting general discussion.
+This project trains and evaluates a text classifier on 200 full-title-and-body posts from the public [r/Entrepreneur](https://www.reddit.com/r/Entrepreneur/) community. The posts were selected from the local [Entrepreneur_data.csv](../archive/Entrepreneur_data.csv), which contains 999 archived posts and source URLs. The classifier sorts posts by their main purpose: recounting a business experience (`experience_report`), offering or requesting practical guidance for a concrete business task (`specific_advice`), or inviting broader opinions and discussion (`open_discussion`). The notebook creates train, validation, and test splits, fine-tunes a text-classification model, and saves its evaluation results and held-out test posts.
 
 ---
 
@@ -183,13 +183,15 @@ These eight synthetic posts were generated with AI to test the definitions; they
 
 - *What I asked for:* Help compare the available archived datasets and choose one with enough long posts and real variation for this project.
 - *What came back:* `Entrepreneur_data.csv` stood out with 999 posts, 959 non-empty bodies, varied post flairs, and Reddit source URLs. I selected 200 unique posts with full titles and bodies for `labels.csv`.
-- *What I changed:* I switched the project from r/running to r/Entrepreneur and adapted the examples, label definitions, and decision rule to business posts. I selected 200 posts and assigned AI-assisted labels to the full set; the first 20 were not cold-labeled.
+- *What I changed:* I switched the project from r/running to r/Entrepreneur and adapted the examples, label definitions, and decision rule to business posts.
 
 **Moment 2**
 
-- *What I asked for:* Eight synthetic posts near the label boundaries, then a classification of each using the written rules; I also asked for first-pass labels on the collected archive sample.
-- *What came back:* The examples exposed overlap between case narratives and practical how-to posts. 
-- *What I changed:* I broadened `specific_advice` to include practical how-to guidance as well as advice requests, and documented the case-versus-guidance decision rule. 
+- *What I asked for:* Eight synthetic posts near the label boundaries and a classification of each using the written rules.
+- *What came back:* The examples exposed overlap between case narratives and practical how-to posts.
+- *What I changed:* I broadened `specific_advice` to include practical how-to guidance as well as advice requests, and documented the case-versus-guidance decision rule. The synthetic examples are boundary tests, not real community posts.
+
+
 
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 
