@@ -156,15 +156,15 @@ These eight synthetic posts were generated with AI to test the definitions; they
 
 <!-- Your starting model, your settings, and anything you changed and why. -->
 
-**Base model:**
+**Base model:** `distilbert-base-uncased`
 
-**Settings:** <!-- epochs, learning rate, batch size, seed -->
+**Settings:** 3 epochs, learning rate `2e-5`, batch size 16, max length 128 tokens, seed 42.
 
-**Anything I changed from the defaults, and why:**
+**Training device:** CPU (`torch 2.14.1+cpu`).
 
-**Split sizes:** <!-- train / val / test, and per-label counts in the test
-split. If a label had fewer than about 8 in test, say so — it explains a lot
-of next unit's variance. -->
+**Anything I changed from the defaults, and why:** Nothing; I used the notebook defaults.
+
+**Split sizes:** train 139, validation 31, test 30. The test split has 14 `experience_report`, 10 `specific_advice`, and 6 `open_discussion` posts. The `open_discussion` test count is below 8, so its metrics may vary substantially.
 
 
 
@@ -183,7 +183,7 @@ of next unit's variance. -->
 
 - *What I asked for:* Help compare the available archived datasets and choose one with enough long posts and real variation for this project.
 - *What came back:* `Entrepreneur_data.csv` stood out with 999 posts, 959 non-empty bodies, varied post flairs, and Reddit source URLs. I selected 200 unique posts with full titles and bodies for `labels.csv`.
-- *What I changed:* I switched the project from r/running to r/Entrepreneur and adapted the examples, label definitions, and decision rule to business posts. I reserved the first 20 rows for my own cold labels; those labels are still pending.
+- *What I changed:* I switched the project from r/running to r/Entrepreneur and adapted the examples, label definitions, and decision rule to business posts. I selected 200 posts and assigned AI-assisted labels to the full set; the first 20 were not cold-labeled.
 
 **Moment 2**
 
