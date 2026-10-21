@@ -53,59 +53,76 @@ whether you hit them:
 
 ## 1.
 
-<!-- Your criterion. It must name a number. -->
+On the held-out set, overall accuracy is at least **0.60 in each of the three
+seeds**.
 
 
 
-**Why this target:**
-
-
+**Why this target:** With three labels, a uniform guess is right about one-third
+of the time. Sixty percent is a meaningful improvement over that, while still
+allowing for overlap between personal advice requests and general discussion.
 
 ---
 
 ## 2.
 
-<!-- Your criterion. -->
+The held-out **F1 is at least 0.50 for each of `experience_report`,
+`specific_advice`, and `open_discussion` in each seed**.
 
 
 
-**Why this target:**
-
-
+**Why this target:** The labels have different cues: race reports often give a
+structured account, while advice and discussion posts can both ask questions.
+A per-label floor prevents a good overall score from hiding a label the model
+is mostly failing to recognize. I chose 0.50 rather than a higher floor because
+each label's test support will be limited in a 200-post dataset.
 
 ---
 
 ## 3.
 
-<!-- Your criterion. -->
+In the 200-post labelled dataset, **each label accounts for at least 20% and
+no label accounts for more than 60%** of posts (at least 40 and at most 120
+posts per label).
 
 
 
-**Why this target:**
-
-
+**Why this target:** `specific_advice` and `open_discussion` are both question
+shapes in this broad running community, so either could dominate if I label by
+surface form instead of purpose. Requiring at least 40 examples per label
+leaves useful training data for every distinction, while the 60% ceiling
+allows the community's naturally uneven post mix.
 
 ---
 
 ## 4.
 
-<!-- Your criterion. -->
+On a random sample of **30 posts independently labelled by a second reader,
+at least 24 labels match mine (80% exact agreement)**.
 
 
 
-**Why this target:**
-
-
+**Why this target:** The main subjective boundary is between advice for the
+writer's own situation and general discussion. Agreement of 24 out of 30
+would show that the decision rule is clear enough to apply consistently, while
+leaving room for genuinely ambiguous posts.
 
 ---
 
 ## 5.
 
-<!-- Your criterion. -->
+For each seed, the model's accuracy on its **most-confident third** of held-out
+posts is at least **0.70** and at least **0.10 higher** than its accuracy on
+the least-confident third.
 
 
 
-**Why this target:**
+**Why this target:** A classifier is more useful if its strongest predictions
+are dependable and its confidence separates clearer examples from boundary
+cases. The notebook reports accuracy for both confidence thirds; a 0.10 gap
+is large enough to be meaningful, and 0.70 on the most-confident third is
+higher than the overall 0.60 target without demanding certainty from every
+prediction.
 
 
 
