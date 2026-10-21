@@ -42,7 +42,7 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
-
+This project classifies public posts from [r/running](https://www.reddit.com/r/running/), a broad running community with race reports, training discussions, and advice questions. I read 35 posts from the public [Top: past year feed](https://www.reddit.com/r/running/top/?t=year) while developing the taxonomy. The labels describe each post's main purpose: recounting completed running, asking for personal advice, or inviting general discussion. The full 200-post dataset still needs to be collected and labelled.
 
 ---
 
@@ -54,35 +54,57 @@
      The decision rule is worth a point on its own and it's the thing most
      people leave out. Every taxonomy has a hardest boundary. Name yours. -->
 
-### `label_one`
+### `experience_report`
 
-**Definition:**
-
-**Example 1:**
->
-
-**Example 2:**
->
-
-### `label_two`
-
-**Definition:**
+**Definition:** Primarily recounts the writer's completed race, run, or training experience rather than asking for advice.
 
 **Example 1:**
->
+> [Baystate Half Marathon - first time going sub 1:30!](https://www.reddit.com/r/running/comments/1xasvjb/baystate_half_marathon_first_time_going_sub_130/) — a completed half-marathon report with a finishing time, splits, and training details.
 
 **Example 2:**
->
+> [Race Report - Loch Ness Marathon - PB, BQ, SUB 3](https://www.reddit.com/r/running/comments/1wuzdvc/race_report_loch_ness_marathon_pb_bq_sub_3/) — recounts the writer's completed marathon and preparation.
+
+### `specific_advice`
+
+**Definition:** Asks for actionable recommendations about the writer's own current or upcoming running situation.
+
+**Example 1:**
+> [How to increase running volume](https://www.reddit.com/r/running/comments/1tn57i8/how_to_increase_running_volume/) — gives current mileage and a target, then asks how to increase safely.
+
+**Example 2:**
+> [New to racing, anxiety?](https://www.reddit.com/r/running/comments/1qzzxej/new_to_racing_anxiety/) — describes anxiety about an upcoming first half and asks for advice.
+
+### `open_discussion`
+
+**Definition:** Invites general knowledge, opinions, or other runners' experiences rather than advice for the writer's own current decision.
+
+**Example 1:**
+> [How much did a smart watch and/or heart rate monitor change your training and running progress?](https://www.reddit.com/r/running/comments/1qh4l4r/how_much_did_a_smart_watch_andor_heart_rate/) — asks the community broadly about effects on training and goals.
+
+**Example 2:**
+> [Marathon known course vs unkown](https://www.reddit.com/r/running/comments/1rsyx52/marathon_known_course_vs_unkown/) — asks runners to compare experiences with familiar and unfamiliar courses.
 
 ### The hardest boundary
 
-**Which two labels:**
+**Which two labels:** `specific_advice` vs. `open_discussion`
 
 **The decision rule I used every time:**
-<!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
-     if the tone is heated." -->
+First, if most of the post recounts the writer's completed run, race, or training cycle, use `experience_report`, even if it ends with a question. Otherwise, if the writer asks what to do about their own current or upcoming situation, use `specific_advice`; if they ask for general knowledge, opinions, or other people's stories, use `open_discussion`. Personal details alone do not make a post `specific_advice`.
 
+### Boundary stress test
 
+These eight synthetic posts were generated with AI to test the definitions; they are not community posts.
+
+| Synthetic boundary post | Label | Why |
+|---|---|---|
+| "My first 10K is next week and I can comfortably run 5K. Should I start at my usual easy pace or aim faster?" | `specific_advice` | Asks what to do in the writer's upcoming race. |
+| "What pace do you usually start at for a 10K?" | `open_discussion` | General question; no personal decision to advise on. |
+| "I finished my first 10K in 58 minutes today. I started too fast, settled down after 4K, and felt strong at the end." | `experience_report` | Mainly recounts a completed race. |
+| "I ran my first half last weekend and cramped at mile 10. What should I change about my fueling next time?" | `specific_advice` | A past event is context for a personal, actionable next-step question. |
+| "I ran 18 miles for the first time on Sunday. The last three were rough, but I finished; has anyone else had that happen?" | `experience_report` | The body mainly recounts a completed run; the closing question does not change its main purpose. |
+| "For a marathon build, how many long runs over 16 miles do you find useful?" | `open_discussion` | Seeks general practice and opinions. |
+| "I'm at 25 miles a week and want to reach 35. Is adding a fourth running day a sensible next step?" | `specific_advice` | Requests a recommendation for the writer's stated plan. |
+| "I ran my first 5K in 31 minutes yesterday and want to improve. What does everyone do to get faster?" | `specific_advice` | Despite asking broadly, it asks for help with the writer's own improvement goal. |
 
 ---
 
@@ -91,10 +113,9 @@
 <!-- Where you collected from, how you labelled, your counts, and three hard
      cases. -->
 
-**Where the posts came from:**
+**Where the posts came from:** Public posts in [r/running](https://www.reddit.com/r/running/); the 35-post reading sample came from its [Top: past year feed](https://www.reddit.com/r/running/top/?t=year). The complete 200-post dataset has not yet been collected.
 
-**How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
-Say so plainly — the disclosure is required, not penalised. -->
+**How I labelled them:** I manually read 35 posts to develop these categories and examples. I have not yet labelled the full dataset.
 
 **Counts per label:**
 
@@ -162,17 +183,17 @@ of next unit's variance. -->
 
 **Moment 1**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* Help turn the differences I noticed in r/running posts into labels based on a post's main purpose, not a subjective quality judgment.
+- *What came back:* A three-label draft distinguishing completed-experience reports, personal advice requests, and general discussion.
+- *What I changed:* I clarified that completed-experience reports take precedence when most of the post recounts the event, even if it ends with a question.
 
 **Moment 2**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* Eight synthetic posts near the label boundaries, then a classification of each using the written rules.
+- *What came back:* The examples exposed overlap between personal advice requests and open discussion, and between race reports and posts ending in a question.
+- *What I changed:* I made the decision order explicit: completed-experience report first, then actionable advice for the writer's own situation, then general discussion.
 
-**Pre-labelling disclosure:**
+**Pre-labelling disclosure:** No real posts were pre-labelled by AI. AI helped draft the taxonomy and generated the eight synthetic stress-test examples; I read the real examples linked above.
 
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 
@@ -190,8 +211,9 @@ of next unit's variance. -->
 |---|---|---|---|
 | Overall accuracy |  |  |  |
 | Macro F1 |  |  |  |
-| F1 — `label_one` |  |  |  |
-| F1 — `label_two` |  |  |  |
+| F1 — `experience_report` |  |  |  |
+| F1 — `specific_advice` |  |  |  |
+| F1 — `open_discussion` |  |  |  |
 
 **What I predicted before I looked:**
 <!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
@@ -225,14 +247,14 @@ of next unit's variance. -->
 
 | true \ predicted |  |  |  |
 |---|---|---|---|
-| **** |  |  |  |
-| **** |  |  |  |
-| **** |  |  |  |
+| `experience_report` |  |  |  |
+| `specific_advice` |  |  |  |
+| `open_discussion` |  |  |  |
 
 **My biggest off-diagonal number, and what it means:**
 <!-- Not "the model made mistakes" — WHICH boundary it didn't learn, and which
-     direction. "7 real analysis posts were called hot_take and only 3 went the
-     other way" is a direction, not just an error rate. -->
+     direction. "7 real experience_report posts were called specific_advice and
+     only 3 went the other way" is a direction, not just an error rate. -->
 
 
 

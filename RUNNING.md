@@ -135,7 +135,7 @@ Section 2's last cell looks for the things that break a run or quietly ruin it:
 
 | It says | What it means |
 |---|---|
-| `[FIX ME] Labels in your CSV that aren't in LABELS` | A spelling or capital mismatch. `Hot_take` and `hot_take` are different |
+| `[FIX ME] Labels in your CSV that aren't in LABELS` | A spelling or capital mismatch. `Specific_Advice` and `specific_advice` are different |
 | `[FIX ME] 'x' is 78% of your data` | Over the brief's 70% cap. The model will learn to guess it |
 | `[look at] N duplicate posts` | They'll land in different splits and inflate your score. That's leakage |
 | `[look at] Only 12 examples of 'x'` | Its test split will be tiny, so its F1 will jump between seeds |

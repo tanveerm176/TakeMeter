@@ -60,9 +60,9 @@ def load_definitions(path):
 
     Format is one label per line:
 
-        analysis: makes an argument backed by a specific checkable fact
-        hot_take: a confident claim with no support offered
-        reaction: an immediate response to something that just happened
+        experience_report: primarily recounts the writer's completed running experience
+        specific_advice: asks for actionable recommendations about the writer's situation
+        open_discussion: invites general knowledge, opinions, or others' experiences
 
     Copy these from your README so the baseline is judged on exactly the
     definitions you wrote. If the file doesn't exist, the label names are used
@@ -99,7 +99,7 @@ def classify(texts, labels, definitions=None, quiet=False):
 
     definitions = definitions or {}
     # Give the model the definition where we have one; it discriminates far
-    # better on "makes an argument backed by a checkable fact" than on "analysis".
+    # better on "asks for actionable recommendations" than on "specific_advice".
     candidates = [definitions.get(label, label) for label in labels]
     back = {candidate: label for candidate, label in zip(candidates, labels)}
 
