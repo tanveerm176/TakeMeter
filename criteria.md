@@ -73,8 +73,8 @@ The held-out **F1 is at least 0.50 for each of `experience_report`,
 
 
 **Why this target:** The labels have different cues: business experience
-reports often describe outcomes, while advice and general discussion posts can
-both ask questions. A per-label floor prevents a good overall score from
+reports often describe outcomes, while practical guidance and open discussion
+can both include recommendations or questions. A per-label floor prevents a good overall score from
 hiding a label the model is mostly failing to recognize. I chose 0.50 rather
 than a higher floor because each label's test support will be limited in a
 200-post dataset.
@@ -89,10 +89,9 @@ posts per label).
 
 
 
-**Why this target:** `specific_advice` and `open_discussion` both often appear
-as questions in r/Entrepreneur, so either could dominate if I label by surface
-form instead of purpose. Requiring at least 40 examples per label leaves useful
-training data for every distinction, while the 60% ceiling allows the
+**Why this target:** The archive contains practical guides, personal business
+stories, and open discussion. Requiring at least 40 examples per label leaves
+useful training data for every distinction, while the 60% ceiling allows the
 community's naturally uneven post mix.
 
 ---
@@ -104,10 +103,11 @@ at least 24 labels match mine (80% exact agreement)**.
 
 
 
-**Why this target:** The main subjective boundary is between advice for the
-writer's own business situation and general discussion. Agreement of 24 out of
-30 would show that the decision rule is clear enough to apply consistently,
-while leaving room for genuinely ambiguous posts.
+**Why this target:** The main subjective boundary is whether a post's main
+purpose is to recount a specific business case or to offer transferable
+guidance from it. Agreement of 24 out of 30 would show that the decision rule
+is clear enough to apply consistently, while leaving room for genuinely
+ambiguous posts.
 
 ---
 

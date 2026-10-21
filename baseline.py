@@ -61,8 +61,8 @@ def load_definitions(path):
     Format is one label per line:
 
         experience_report: primarily recounts a business experience and what happened
-        specific_advice: asks for actionable recommendations about the writer's situation
-        open_discussion: invites general knowledge, opinions, or others' experiences
+        specific_advice: offers or requests practical, actionable guidance for a business task
+        open_discussion: invites broad opinions, discussion, or community experiences
 
     Copy these from your README so the baseline is judged on exactly the
     definitions you wrote. If the file doesn't exist, the label names are used

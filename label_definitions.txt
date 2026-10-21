@@ -6,5 +6,5 @@
 # These are the definitions from the current project taxonomy.
 
 experience_report: primarily recounts a business or entrepreneurial experience and what happened, rather than asking for recommendations about the writer's situation
-specific_advice: asks for actionable recommendations about a concrete business problem or decision in the writer's own situation
-open_discussion: invites general opinions, knowledge, or entrepreneurs' stories without asking for a recommendation about the writer's own concrete business problem
+specific_advice: primarily offers or requests practical, actionable guidance for a concrete business task, problem, or decision
+open_discussion: primarily invites broad opinions, discussion, or community experiences without focusing on practical guidance or one concrete business case

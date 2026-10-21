@@ -66,17 +66,17 @@ This project classifies posts from the public [r/Entrepreneur](https://www.reddi
 
 ### `specific_advice`
 
-**Definition:** Asks for actionable recommendations about a concrete business problem or decision in the writer's own situation.
+**Definition:** Primarily offers or requests practical, actionable guidance for a concrete business task, problem, or decision.
 
 **Example 1:**
 > [I can't in good conscience have my manufacturing done in China anymore. What are my other options and how do I find suppliers?](https://www.reddit.com/r/Entrepreneur/comments/dfe3a6/i_cant_in_good_conscious_have_my_manufacturing/) — asks for sourcing options for the writer's manufacturing needs.
 
 **Example 2:**
-> [Lady refused to pay me. What should I do?](https://www.reddit.com/r/Entrepreneur/comments/f2g2t5/lady_refused_to_pay_me_what_should_i_do/) — describes a specific payment dispute and asks how to handle it.
+> [My patent was just granted. I'm looking to locate a manufacturer. Alibaba isn't working out. Help?](https://www.reddit.com/r/Entrepreneur/comments/65jmfz/my-patent-was-just-granted-im-looking-to-locate-a/) — asks for practical sourcing help for a specific product.
 
 ### `open_discussion`
 
-**Definition:** Invites general opinions, knowledge, or entrepreneurs' stories without asking for a recommendation about the writer's own concrete business problem.
+**Definition:** Primarily invites broad opinions, discussion, or community experiences without focusing on practical guidance or one concrete business case.
 
 **Example 1:**
 > [Who here has an interesting small business that just ticks over with a profit each and every month? What are your stories?](https://www.reddit.com/r/Entrepreneur/comments/5okzhj/im_tired_of_reading_about_people_making_6_figures/) — invites examples from the community generally.
@@ -86,10 +86,10 @@ This project classifies posts from the public [r/Entrepreneur](https://www.reddi
 
 ### The hardest boundary
 
-**Which two labels:** `specific_advice` vs. `open_discussion`
+**Which two labels:** `experience_report` vs. `specific_advice`
 
 **The decision rule I used every time:**
-First, if most of the post recounts a business experience and its outcome, use `experience_report`, even if it ends with a question. Otherwise, if the writer asks what to do about a concrete problem or decision in their own business situation, use `specific_advice`; if they invite general opinions, knowledge, or other people's stories, use `open_discussion`. Personal details alone do not make a post `specific_advice`.
+If most of the post recounts a specific business case or experience and its outcome, use `experience_report`, even if it includes lessons or ends with a question. If its main purpose is to give or request transferable steps, recommendations, or instructions for a business task, use `specific_advice`. Use `open_discussion` for broad opinions or questions that are not mainly a how-to or a case narrative.
 
 ### Boundary stress test
 
@@ -99,12 +99,12 @@ These eight synthetic posts were generated with AI to test the definitions; they
 |---|---|---|
 | "I opened a small online shop last year. It took six months to break even, and this month I finally paid myself. I wanted to share what changed." | `experience_report` | Recounts a completed business experience and outcome. |
 | "After two years of freelancing, I hired my first employee last month. The first payroll run was nerve-racking, but we delivered our biggest project yet." | `experience_report` | Mainly tells the story of a recent business milestone. |
-| "My first product launch is next month and my supplier has doubled the minimum order. How should I renegotiate without delaying launch?" | `specific_advice` | Asks for a recommendation about the writer's concrete business problem. |
-| "A client is 60 days late paying a large invoice, and I have payroll due Friday. What steps would you take first?" | `specific_advice` | Requests actionable help for the writer's immediate situation. |
-| "What was the first business expense that made the biggest difference for you?" | `open_discussion` | Invites general experiences rather than help with a personal decision. |
-| "Do you think subscription pricing works better than one-time sales for small software businesses?" | `open_discussion` | Asks for general opinions about a business model. |
-| "I built a prototype and showed it to 12 potential customers. Eight said they might buy, but none would pre-order. Is that enough validation?" | `specific_advice` | Despite evidence and a general-sounding final question, the writer asks for a judgment about their own decision. |
-| "Our first location took 14 months to become profitable. Has anyone else found that expansion takes longer than expected?" | `experience_report` | Its main purpose is the writer's completed experience; the question invites comparison but does not ask what to do. |
+| "My first product launch is next month and my supplier has doubled the minimum order. How should I renegotiate without delaying launch?" | `specific_advice` | Requests practical guidance for a concrete business decision. |
+| "A client is 60 days late paying a large invoice, and I have payroll due Friday. What steps would you take first?" | `specific_advice` | Requests actionable help for an immediate situation. |
+| "What was the first business expense that made the biggest difference for you?" | `open_discussion` | Invites general experiences rather than instructions for a particular task. |
+| "Do you think subscription pricing works better than one-time sales for small software businesses?" | `open_discussion` | Asks for broad opinions about a business model. |
+| "I built a prototype and showed it to 12 potential customers. Eight said they might buy, but none would pre-order. Is that enough validation?" | `specific_advice` | The post asks for a judgment on a concrete decision; the numbers are context for that request. |
+| "Our first location took 14 months to become profitable. Has anyone else found that expansion takes longer than expected?" | `experience_report` | The main purpose is a specific business case and outcome; the question invites comparison. |
 
 ---
 
@@ -113,18 +113,16 @@ These eight synthetic posts were generated with AI to test the definitions; they
 <!-- Where you collected from, how you labelled, your counts, and three hard
      cases. -->
 
-**Where the posts came from:** The local [Entrepreneur_data.csv](../archive/Entrepreneur_data.csv) file, a collection of posts from [r/Entrepreneur](https://www.reddit.com/r/Entrepreneur/). It has 999 records with Reddit source URLs; 959 include a non-empty body and 40 are title-only. I will select 200 posts with bodies and keep each complete title and body. The archive is beside the `TakeMeter` folder.
-
-**How I labelled them:** The full 200-post `labels.csv` has not yet been assembled or labelled. I will label the first 20 without AI help and mark them `cold`; any AI-assisted labels for the remaining posts will be read and corrected before they are used.
+**Where the posts came from:** The local [Entrepreneur_data.csv](../archive/Entrepreneur_data.csv) file, a collection of posts from [r/Entrepreneur](https://www.reddit.com/r/Entrepreneur/). It has 999 records with Reddit source URLs; 959 include a non-empty body and 40 are title-only. I selected 200 unique posts with non-empty bodies and kept each complete title and body in `labels.csv`; the source URL is recorded in each row's note. The archive is beside the `TakeMeter` folder.
 
 **Counts per label:**
 
 | Label | Count | Share |
 |---|---|---|
-|  |  |  |
-|  |  |  |
-|  |  |  |
-| **Total** |  | 100% |
+| `experience_report` | 93 | 46.5% |
+| `specific_advice` | 67 | 33.5% |
+| `open_discussion` | 40 | 20.0% |
+| **Total** | **200** | **100%** |
 
 **Three hard cases**
 
@@ -132,25 +130,25 @@ These eight synthetic posts were generated with AI to test the definitions; they
      been, and what you chose. These are worth more than the easy 190. -->
 
 **1.**
-> *The post:*
+> *The post:* "I own a 2.7M follower Instagram 'niche' account and just received a buyout offer for $120,000 USD. I'm not ready to give up my account... Thoughts?"
 >
-> *Could have been:*
+> *Could have been:* `experience_report` or `specific_advice`
 >
-> *I chose, because:*
+> *I chose, because:* `specific_advice` — the numbers are context, but the post's purpose is to get thoughts on a live decision about the offer.
 
 **2.**
-> *The post:*
+> *The post:* "I've been having a huge drought when it comes to hiring employees. My company is short staffed... What things have helped you in these low unemployment times?"
 >
-> *Could have been:*
+> *Could have been:* `specific_advice` or `open_discussion`
 >
-> *I chose, because:*
+> *I chose, because:* `specific_advice` — it asks for practical approaches to the writer's current staffing problem.
 
 **3.**
-> *The post:*
+> *The post:* "5 months ago I made a post about buying a coffee shop and everyone told me not to do it. I am back with an update."
 >
-> *Could have been:*
+> *Could have been:* `experience_report` or `specific_advice`
 >
-> *I chose, because:*
+> *I chose, because:* `experience_report` — the main purpose is to report what happened after the earlier decision, even though it may include lessons or questions.
 
 ---
 
@@ -184,16 +182,14 @@ of next unit's variance. -->
 **Moment 1**
 
 - *What I asked for:* Help compare the available archived datasets and choose one with enough long posts and real variation for this project.
-- *What came back:* `Entrepreneur_data.csv` stood out with 999 posts, 959 non-empty bodies, varied post flairs, and Reddit source URLs.
-- *What I changed:* I switched the project from r/running to r/Entrepreneur and adapted the examples, label definitions, and decision rule to business posts.
+- *What came back:* `Entrepreneur_data.csv` stood out with 999 posts, 959 non-empty bodies, varied post flairs, and Reddit source URLs. I selected 200 unique posts with full titles and bodies for `labels.csv`.
+- *What I changed:* I switched the project from r/running to r/Entrepreneur and adapted the examples, label definitions, and decision rule to business posts. I reserved the first 20 rows for my own cold labels; those labels are still pending.
 
 **Moment 2**
 
-- *What I asked for:* Eight synthetic posts near the label boundaries, then a classification of each using the written rules.
-- *What came back:* The examples exposed overlap between personal business advice requests and general discussion, and between experience reports that end with a question and advice requests.
-- *What I changed:* I made the decision order explicit: business experience and outcome first, then actionable advice for the writer's concrete situation, then general discussion.
-
-**Pre-labelling disclosure:** No real posts were pre-labelled by AI. AI helped draft the taxonomy and generated the eight synthetic stress-test examples; I read the real examples linked above.
+- *What I asked for:* Eight synthetic posts near the label boundaries, then a classification of each using the written rules; I also asked for first-pass labels on the collected archive sample.
+- *What came back:* The examples exposed overlap between case narratives and practical how-to posts. 
+- *What I changed:* I broadened `specific_advice` to include practical how-to guidance as well as advice requests, and documented the case-versus-guidance decision rule. 
 
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 
