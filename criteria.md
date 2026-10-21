@@ -60,7 +60,8 @@ seeds**.
 
 **Why this target:** With three labels, a uniform guess is right about one-third
 of the time. Sixty percent is a meaningful improvement over that, while still
-allowing for overlap between personal advice requests and general discussion.
+allowing for overlap between personal business advice requests and general
+discussion prompts.
 
 ---
 
@@ -71,11 +72,12 @@ The held-out **F1 is at least 0.50 for each of `experience_report`,
 
 
 
-**Why this target:** The labels have different cues: race reports often give a
-structured account, while advice and discussion posts can both ask questions.
-A per-label floor prevents a good overall score from hiding a label the model
-is mostly failing to recognize. I chose 0.50 rather than a higher floor because
-each label's test support will be limited in a 200-post dataset.
+**Why this target:** The labels have different cues: business experience
+reports often describe outcomes, while advice and general discussion posts can
+both ask questions. A per-label floor prevents a good overall score from
+hiding a label the model is mostly failing to recognize. I chose 0.50 rather
+than a higher floor because each label's test support will be limited in a
+200-post dataset.
 
 ---
 
@@ -87,11 +89,11 @@ posts per label).
 
 
 
-**Why this target:** `specific_advice` and `open_discussion` are both question
-shapes in this broad running community, so either could dominate if I label by
-surface form instead of purpose. Requiring at least 40 examples per label
-leaves useful training data for every distinction, while the 60% ceiling
-allows the community's naturally uneven post mix.
+**Why this target:** `specific_advice` and `open_discussion` both often appear
+as questions in r/Entrepreneur, so either could dominate if I label by surface
+form instead of purpose. Requiring at least 40 examples per label leaves useful
+training data for every distinction, while the 60% ceiling allows the
+community's naturally uneven post mix.
 
 ---
 
@@ -103,9 +105,9 @@ at least 24 labels match mine (80% exact agreement)**.
 
 
 **Why this target:** The main subjective boundary is between advice for the
-writer's own situation and general discussion. Agreement of 24 out of 30
-would show that the decision rule is clear enough to apply consistently, while
-leaving room for genuinely ambiguous posts.
+writer's own business situation and general discussion. Agreement of 24 out of
+30 would show that the decision rule is clear enough to apply consistently,
+while leaving room for genuinely ambiguous posts.
 
 ---
 

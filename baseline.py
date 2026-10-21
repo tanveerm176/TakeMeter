@@ -60,7 +60,7 @@ def load_definitions(path):
 
     Format is one label per line:
 
-        experience_report: primarily recounts the writer's completed running experience
+        experience_report: primarily recounts a business experience and what happened
         specific_advice: asks for actionable recommendations about the writer's situation
         open_discussion: invites general knowledge, opinions, or others' experiences
 

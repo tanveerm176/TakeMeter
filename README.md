@@ -42,7 +42,7 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
-This project classifies public posts from [r/running](https://www.reddit.com/r/running/), a broad running community with race reports, training discussions, and advice questions. I read 35 posts from the public [Top: past year feed](https://www.reddit.com/r/running/top/?t=year) while developing the taxonomy. The labels describe each post's main purpose: recounting completed running, asking for personal advice, or inviting general discussion. The full 200-post dataset still needs to be collected and labelled.
+This project classifies posts from the public [r/Entrepreneur](https://www.reddit.com/r/Entrepreneur/) community. The local archive file [Entrepreneur_data.csv](../archive/Entrepreneur_data.csv) contains 999 posts with source URLs; 959 have non-empty bodies. I will use each post's full title and body, selecting 200 posts with bodies for the labelled dataset. The labels describe each post's main purpose: recounting a business experience, seeking advice for a specific situation, or inviting general discussion.
 
 ---
 
@@ -56,40 +56,40 @@ This project classifies public posts from [r/running](https://www.reddit.com/r/r
 
 ### `experience_report`
 
-**Definition:** Primarily recounts the writer's completed race, run, or training experience rather than asking for advice.
+**Definition:** Primarily recounts a business or entrepreneurial experience and what happened, rather than asking for recommendations about the writer's situation.
 
 **Example 1:**
-> [Baystate Half Marathon - first time going sub 1:30!](https://www.reddit.com/r/running/comments/1xasvjb/baystate_half_marathon_first_time_going_sub_130/) — a completed half-marathon report with a finishing time, splits, and training details.
+> [I lost nearly $8000 selling on Amazon FBA](https://www.reddit.com/r/Entrepreneur/comments/ayzlqu/i_lost_nearly_8000_selling_on_amazon_fba/) — recounts the writer's failed business attempt, costs, and lessons.
 
 **Example 2:**
-> [Race Report - Loch Ness Marathon - PB, BQ, SUB 3](https://www.reddit.com/r/running/comments/1wuzdvc/race_report_loch_ness_marathon_pb_bq_sub_3/) — recounts the writer's completed marathon and preparation.
+> [I changed careers and went from $40k to $100k in one year](https://www.reddit.com/r/Entrepreneur/comments/ge9swn/i_changed_careers_and_went_from_40k_to_100k_in/) — tells the writer's own career transition and outcome.
 
 ### `specific_advice`
 
-**Definition:** Asks for actionable recommendations about the writer's own current or upcoming running situation.
+**Definition:** Asks for actionable recommendations about a concrete business problem or decision in the writer's own situation.
 
 **Example 1:**
-> [How to increase running volume](https://www.reddit.com/r/running/comments/1tn57i8/how_to_increase_running_volume/) — gives current mileage and a target, then asks how to increase safely.
+> [I can't in good conscience have my manufacturing done in China anymore. What are my other options and how do I find suppliers?](https://www.reddit.com/r/Entrepreneur/comments/dfe3a6/i_cant_in_good_conscious_have_my_manufacturing/) — asks for sourcing options for the writer's manufacturing needs.
 
 **Example 2:**
-> [New to racing, anxiety?](https://www.reddit.com/r/running/comments/1qzzxej/new_to_racing_anxiety/) — describes anxiety about an upcoming first half and asks for advice.
+> [Lady refused to pay me. What should I do?](https://www.reddit.com/r/Entrepreneur/comments/f2g2t5/lady_refused_to_pay_me_what_should_i_do/) — describes a specific payment dispute and asks how to handle it.
 
 ### `open_discussion`
 
-**Definition:** Invites general knowledge, opinions, or other runners' experiences rather than advice for the writer's own current decision.
+**Definition:** Invites general opinions, knowledge, or entrepreneurs' stories without asking for a recommendation about the writer's own concrete business problem.
 
 **Example 1:**
-> [How much did a smart watch and/or heart rate monitor change your training and running progress?](https://www.reddit.com/r/running/comments/1qh4l4r/how_much_did_a_smart_watch_andor_heart_rate/) — asks the community broadly about effects on training and goals.
+> [Who here has an interesting small business that just ticks over with a profit each and every month? What are your stories?](https://www.reddit.com/r/Entrepreneur/comments/5okzhj/im_tired_of_reading_about_people_making_6_figures/) — invites examples from the community generally.
 
 **Example 2:**
-> [Marathon known course vs unkown](https://www.reddit.com/r/running/comments/1rsyx52/marathon_known_course_vs_unkown/) — asks runners to compare experiences with familiar and unfamiliar courses.
+> [Is it just me or are you also sick of ads for online courses on how to make millions from making online courses?](https://www.reddit.com/r/Entrepreneur/comments/gnu4an/is_it_just_me_or_are_you_also_sick_of_ads_for/) — opens a broad discussion about a trend in the community.
 
 ### The hardest boundary
 
 **Which two labels:** `specific_advice` vs. `open_discussion`
 
 **The decision rule I used every time:**
-First, if most of the post recounts the writer's completed run, race, or training cycle, use `experience_report`, even if it ends with a question. Otherwise, if the writer asks what to do about their own current or upcoming situation, use `specific_advice`; if they ask for general knowledge, opinions, or other people's stories, use `open_discussion`. Personal details alone do not make a post `specific_advice`.
+First, if most of the post recounts a business experience and its outcome, use `experience_report`, even if it ends with a question. Otherwise, if the writer asks what to do about a concrete problem or decision in their own business situation, use `specific_advice`; if they invite general opinions, knowledge, or other people's stories, use `open_discussion`. Personal details alone do not make a post `specific_advice`.
 
 ### Boundary stress test
 
@@ -97,14 +97,14 @@ These eight synthetic posts were generated with AI to test the definitions; they
 
 | Synthetic boundary post | Label | Why |
 |---|---|---|
-| "My first 10K is next week and I can comfortably run 5K. Should I start at my usual easy pace or aim faster?" | `specific_advice` | Asks what to do in the writer's upcoming race. |
-| "What pace do you usually start at for a 10K?" | `open_discussion` | General question; no personal decision to advise on. |
-| "I finished my first 10K in 58 minutes today. I started too fast, settled down after 4K, and felt strong at the end." | `experience_report` | Mainly recounts a completed race. |
-| "I ran my first half last weekend and cramped at mile 10. What should I change about my fueling next time?" | `specific_advice` | A past event is context for a personal, actionable next-step question. |
-| "I ran 18 miles for the first time on Sunday. The last three were rough, but I finished; has anyone else had that happen?" | `experience_report` | The body mainly recounts a completed run; the closing question does not change its main purpose. |
-| "For a marathon build, how many long runs over 16 miles do you find useful?" | `open_discussion` | Seeks general practice and opinions. |
-| "I'm at 25 miles a week and want to reach 35. Is adding a fourth running day a sensible next step?" | `specific_advice` | Requests a recommendation for the writer's stated plan. |
-| "I ran my first 5K in 31 minutes yesterday and want to improve. What does everyone do to get faster?" | `specific_advice` | Despite asking broadly, it asks for help with the writer's own improvement goal. |
+| "I opened a small online shop last year. It took six months to break even, and this month I finally paid myself. I wanted to share what changed." | `experience_report` | Recounts a completed business experience and outcome. |
+| "After two years of freelancing, I hired my first employee last month. The first payroll run was nerve-racking, but we delivered our biggest project yet." | `experience_report` | Mainly tells the story of a recent business milestone. |
+| "My first product launch is next month and my supplier has doubled the minimum order. How should I renegotiate without delaying launch?" | `specific_advice` | Asks for a recommendation about the writer's concrete business problem. |
+| "A client is 60 days late paying a large invoice, and I have payroll due Friday. What steps would you take first?" | `specific_advice` | Requests actionable help for the writer's immediate situation. |
+| "What was the first business expense that made the biggest difference for you?" | `open_discussion` | Invites general experiences rather than help with a personal decision. |
+| "Do you think subscription pricing works better than one-time sales for small software businesses?" | `open_discussion` | Asks for general opinions about a business model. |
+| "I built a prototype and showed it to 12 potential customers. Eight said they might buy, but none would pre-order. Is that enough validation?" | `specific_advice` | Despite evidence and a general-sounding final question, the writer asks for a judgment about their own decision. |
+| "Our first location took 14 months to become profitable. Has anyone else found that expansion takes longer than expected?" | `experience_report` | Its main purpose is the writer's completed experience; the question invites comparison but does not ask what to do. |
 
 ---
 
@@ -113,9 +113,9 @@ These eight synthetic posts were generated with AI to test the definitions; they
 <!-- Where you collected from, how you labelled, your counts, and three hard
      cases. -->
 
-**Where the posts came from:** Public posts in [r/running](https://www.reddit.com/r/running/); the 35-post reading sample came from its [Top: past year feed](https://www.reddit.com/r/running/top/?t=year). The complete 200-post dataset has not yet been collected.
+**Where the posts came from:** The local [Entrepreneur_data.csv](../archive/Entrepreneur_data.csv) file, a collection of posts from [r/Entrepreneur](https://www.reddit.com/r/Entrepreneur/). It has 999 records with Reddit source URLs; 959 include a non-empty body and 40 are title-only. I will select 200 posts with bodies and keep each complete title and body. The archive is beside the `TakeMeter` folder.
 
-**How I labelled them:** I manually read 35 posts to develop these categories and examples. I have not yet labelled the full dataset.
+**How I labelled them:** The full 200-post `labels.csv` has not yet been assembled or labelled. I will label the first 20 without AI help and mark them `cold`; any AI-assisted labels for the remaining posts will be read and corrected before they are used.
 
 **Counts per label:**
 
@@ -183,15 +183,15 @@ of next unit's variance. -->
 
 **Moment 1**
 
-- *What I asked for:* Help turn the differences I noticed in r/running posts into labels based on a post's main purpose, not a subjective quality judgment.
-- *What came back:* A three-label draft distinguishing completed-experience reports, personal advice requests, and general discussion.
-- *What I changed:* I clarified that completed-experience reports take precedence when most of the post recounts the event, even if it ends with a question.
+- *What I asked for:* Help compare the available archived datasets and choose one with enough long posts and real variation for this project.
+- *What came back:* `Entrepreneur_data.csv` stood out with 999 posts, 959 non-empty bodies, varied post flairs, and Reddit source URLs.
+- *What I changed:* I switched the project from r/running to r/Entrepreneur and adapted the examples, label definitions, and decision rule to business posts.
 
 **Moment 2**
 
 - *What I asked for:* Eight synthetic posts near the label boundaries, then a classification of each using the written rules.
-- *What came back:* The examples exposed overlap between personal advice requests and open discussion, and between race reports and posts ending in a question.
-- *What I changed:* I made the decision order explicit: completed-experience report first, then actionable advice for the writer's own situation, then general discussion.
+- *What came back:* The examples exposed overlap between personal business advice requests and general discussion, and between experience reports that end with a question and advice requests.
+- *What I changed:* I made the decision order explicit: business experience and outcome first, then actionable advice for the writer's concrete situation, then general discussion.
 
 **Pre-labelling disclosure:** No real posts were pre-labelled by AI. AI helped draft the taxonomy and generated the eight synthetic stress-test examples; I read the real examples linked above.
 
