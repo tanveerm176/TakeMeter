@@ -316,7 +316,7 @@ Criterion 5 note: each third is only 10 posts, and mean confidence when right vs
      data/staff_taxonomy.md, not your own — so every argument below is made
      from those definitions and those decision rules. -->
 
-**Agreement rate:** ___ / 30 = ___%
+**Agreement rate:** 30 / 30 = 100%
 
 <!-- Nobody grades this number. A 60% who argues every disagreement from the
      stated rules beats a 95% who wrote "staff was right" nine times. Several
@@ -338,25 +338,11 @@ Criterion 5 note: each third is only 10 posts, and mean confidence when right vs
      written rule two different ways on 30 posts, that is direct evidence about
      what you did across your own 200. -->
 
-**1.**
-> *The post:*
->
-> *Staff said / I said:*
->
-> *My call, and why:*
->
-> *Which pile:*
-
-**2.**
-> *The post:*
->
-> *Staff said / I said:*
->
-> *My call, and why:*
->
-> *Which pile:*
+There were no disagreements: all 30 of my labels matched staff's. That included the seven posts staff flagged as hard (`sp_005`, `sp_010`, `sp_014`, `sp_019`, `sp_020`, `sp_028`, `sp_029`), so there is nothing to sort into piles (a), (b) or (c).
 
 **What the pattern in my disagreements tells me:**
+
+With no disagreements I can't show a pattern. A perfect score on 30 posts is not proof of consistent labelling in general, because the staff definitions were short and came with worked decision rules, which is much easier to apply than my own taxonomy was. It does show I can apply a written rule I didn't write, including the rule 1 (`analysis` vs `hot_take`) and rule 2 (`reaction` vs `hot_take`) boundaries. It says nothing about whether I applied my own `experience_report` vs. `specific_advice` rule consistently across my 200 posts. That would need a second reader on my own labels, which is what my criterion 4 asks for.
 
 
 
