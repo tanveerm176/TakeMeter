@@ -401,13 +401,23 @@ Caveats: each seed's test set has only 30 posts, so one post is worth 3.3 accura
 
 <!-- For each criterion still missed: what you'd do, and why you stopped. -->
 
+**Criterion 2 (every label F1 ≥ 0.50 in every seed) is still MISSED.** `open_discussion` has F1 0.000 in all three seeds, even after 10 epochs. `experience_report` (0.812–0.848) and `specific_advice` (0.593–0.727) now clear 0.50.
 
+- **What I'd do:** add more `open_discussion` posts, about 30 (the same step as the "add examples to the thinnest label" option), labelled with the same decision rule. It has only 40 posts in the whole dataset, and only 6 land in each test split. I'd then re-run all three seeds and check that it clears 0.50 in each. I would also consider class weighting, so a rare label costs the model more when it is missed.
+- **Why I stopped:** I made one change per the instructions, and the diagnosis for this miss (too few examples) pointed at a different change from the one I made (more epochs). More epochs fixed the majority-class collapse but could not create signal that 40 posts don't carry. Collecting and carefully labelling 30 more posts was a bigger step than I wanted to take in the same pass.
+- **A limit on what I can claim:** with 6 test posts, one correct prediction moves that label's F1 a lot. Even a real improvement would be noisy, so I'd want a larger test set before trusting a pass.
+
+**Criterion 4 (agreement ≥ 24 of 30) is not properly tested.** I agreed with staff on 30 of 30 posts, but that was the staff taxonomy, not my own labels. What I'd do is have a second reader label 30 random posts from `labels.csv` using only my README definitions and decision rule. I haven't done this because it needs another person.
+
+**Criterion 3 (balance) passes with no margin.** `open_discussion` is exactly 20% (40 of 200). Adding posts to that label, as above, would also give it some room.
+
+**Criterion 1 and 5 now pass, but I wouldn't lean on them.** Accuracy is 0.633–0.700 and still drifts down across seeds, and each third in the confidence check is only 10 posts. Both are measured on 30 test posts per seed.
 
 **The gap between what I meant my labels to capture and what the model
 learned:**
 <!-- Two sentences. Your confusion matrix is the evidence. -->
 
-
+I meant `open_discussion` to be a separate kind of post, one inviting broad opinions rather than telling a case or asking for practical help. In every "after" seed the model puts those posts in the other two classes: in seed 42, 3 went to `experience_report` and 3 to `specific_advice`, and in seed 2024 all 6 went to `specific_advice`. It learned the `experience_report` vs. `specific_advice` boundary (seed 42: 13 and 8 correct out of 14 and 10), but treats `open_discussion` as a variant of them, most likely because there are too few examples to learn that its defining feature is the absence of a concrete case or task.
 
 <!-- ═════════════════════════════════════════════════════════════════════
 
