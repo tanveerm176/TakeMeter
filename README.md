@@ -253,7 +253,7 @@ Accuracy moved 0.067 across seeds. Enough that a criterion landing within that b
 | 1. Overall accuracy | ≥ 0.60 in every seed | 0.500 | 0.467 | 0.533 | MISSED (all three seeds) |
 | 2. Per-label F1 | ≥ 0.50 for each label in every seed | exp 0.651 / adv 0.182 / disc 0.000 | exp 0.636 / adv 0.000 / disc 0.000 | exp 0.632 / adv 0.500 / disc 0.000 | MISSED (`open_discussion` is 0.000 in all seeds; `specific_advice` misses in seeds 42 and 7) |
 | 3. Balance | each label 20–60% of the 200 posts (40–120) | 93 / 67 / 40 (46.5% / 33.5% / 20.0%) | same data | same data | MET, but `open_discussion` sits exactly on the floor |
-| 4. Agreement | ≥ 24 of 30 match a second reader | not run yet | not run yet | not run yet | PENDING (see Agreement Report) |
+| 4. Agreement | ≥ 24 of 30 match a second reader | 30 / 30 vs. staff (same set, all seeds) | n/a | n/a | MET on a proxy only (staff taxonomy, not a second reader on my own posts) |
 | 5. Confidence | most-confident third ≥ 0.70 and ≥ 0.10 above least-confident third | 0.90 vs 0.10 | 0.90 vs 0.00 | 0.90 vs 0.40 | MET on the numbers, but not trustworthy (see note) |
 
 Criterion 5 note: each third is only 10 posts, and mean confidence when right vs. wrong is nearly equal (0.45 vs 0.42, 0.49 vs 0.44, 0.45 vs 0.41), all close to the 1/3 a three-way guesser would give. The model collapses to `experience_report` in every seed, so the "confident" third is mostly easy `experience_report` posts rather than evidence that its confidence means something.
@@ -287,13 +287,25 @@ Criterion 5 note: each third is only 10 posts, and mean confidence when right vs
 
 | # | Criterion | Target | Verdict | How I decided |
 |---|---|---|---|---|
-| 1 |  |  |  |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
-| 4 |  |  |  |  |
-| 5 |  |  |  |  |
+| 1 | Overall accuracy | ≥ 0.60 in every seed | MISSED | 0.500, 0.467, 0.533: below 0.60 in all three seeds, and about the 0.467 you'd get by always predicting `experience_report` (14 of 30 test posts). |
+| 2 | Per-label F1 | ≥ 0.50 for each label in every seed | MISSED | `open_discussion` F1 is 0.000 in all three seeds; `specific_advice` is 0.182, 0.000 and 0.500. Only `experience_report` clears 0.50 (0.632–0.651). |
+| 3 | Balance | each label 20–60% of the 200 posts | MET | 93 / 67 / 40 posts (46.5% / 33.5% / 20.0%). `open_discussion` sits exactly on the 20% floor, so it passes with no margin. |
+| 4 | Agreement | ≥ 24 of 30 match a second reader | MET on a proxy only | I agreed with staff on 30 of 30 posts under the staff taxonomy. That is not the test as written: it is a different taxonomy and nobody has labelled a sample of my own 200 posts, so my own labelling consistency is still unmeasured. |
+| 5 | Confidence | most-confident third ≥ 0.70 and ≥ 0.10 above the least-confident third | MET (numbers only) | 0.90 vs 0.10, 0.90 vs 0.00, 0.90 vs 0.40 in the three seeds, so it holds in every seed. But each third is 10 posts, and mean confidence when right and when wrong are nearly equal (0.45 vs 0.42, 0.49 vs 0.44, 0.45 vs 0.41), so I don't trust it. |
 
 **Diagnoses**
+
+**Criterion 1 (accuracy) and criterion 2 (per-label F1) share one cause: the model is under-trained and defaults to the biggest label. This is a model problem, not a labelling problem.**
+
+- **How I know it's a collapse, not a boundary it half-learned:** in seed 42 it predicted `experience_report` for 29 of 30 test posts. Zero `experience_report` posts were called `specific_advice`, while 9 of 10 `specific_advice` posts were called `experience_report`. If it had learned a blurry version of my hardest boundary, errors would go both ways. Seed 7 collapses fully (all 30 predictions `experience_report`).
+- **The labels are learnable from my definitions:** the zero-shot baseline, which only reads my written definitions, scored `open_discussion` F1 0.545 on the same 30 posts where the trained model scored 0.000. So the label is separable by definition, and the gap comes from training, not from the definition being unusable.
+- **The agreement report points away from labelling:** I matched staff on 30 of 30 posts, including all seven they marked hard, so I can apply a written rule consistently. Caveat: that was staff's taxonomy, not mine, so it is weak evidence about my own 200 labels. I would not rule out an inconsistency on `experience_report` vs `specific_advice` without a second reader on a sample of my own posts.
+- **Cause:** too few examples for the small labels (about 140 training posts, 40 `open_discussion` in total, 6 in the test split), plus a training run that is too short (3 epochs, batch size 16, about 27 optimizer steps) to move off the majority class. The 128-token limit also truncates long posts. I have not tested which of these matters most; the improvement run should change one at a time.
+- **Why `specific_advice` swings 0.000–0.500:** only 10 test posts, and the model sits near the decision boundary, so a few predictions flipping changes F1 a lot. That variance is itself a symptom of the under-training.
+
+**Criterion 5 (confidence), passes but is not evidence the model is useful.** Because the model collapses, the "most confident" third is mostly easy `experience_report` posts. I'm recording it as MET because the target was met, but I would not claim the model's confidence is meaningful.
+
+**Criterion 4 (agreement), not a miss, but not fully tested.** The remaining gap is a second reader on my own labels.
 
 <!-- For each miss: the cause, and how you know. The four common causes are:
      too few examples for a label, a boundary you applied inconsistently, a
