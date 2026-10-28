@@ -238,29 +238,43 @@ The likely cause is too little training data (about 140 training posts, only 40 
 <!-- Five criteria across three seeds. The notebook's section 6 prints the
      spread table; the Target and Verdict columns are yours. -->
 
+| Measure | Seed 42 | Seed 7 | Seed 2024 | Spread |
+|---|---|---|---|---|
+| Overall accuracy | 0.500 | 0.467 | 0.533 | 0.067 |
+| Macro F1 | 0.278 | 0.212 | 0.377 | 0.165 |
+| F1 — `experience_report` | 0.651 | 0.636 | 0.632 | 0.020 |
+| F1 — `specific_advice` | 0.182 | 0.000 | 0.500 | 0.500 |
+| F1 — `open_discussion` | 0.000 | 0.000 | 0.000 | 0.000 |
+
+Accuracy moved 0.067 across seeds. Enough that a criterion landing within that band can't really be called either way.
+
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Overall accuracy | ≥ 0.60 in every seed | 0.500 | 0.467 | 0.533 | MISSED (all three seeds) |
+| 2. Per-label F1 | ≥ 0.50 for each label in every seed | exp 0.651 / adv 0.182 / disc 0.000 | exp 0.636 / adv 0.000 / disc 0.000 | exp 0.632 / adv 0.500 / disc 0.000 | MISSED (`open_discussion` is 0.000 in all seeds; `specific_advice` misses in seeds 42 and 7) |
+| 3. Balance | each label 20–60% of the 200 posts (40–120) | 93 / 67 / 40 (46.5% / 33.5% / 20.0%) | same data | same data | MET, but `open_discussion` sits exactly on the floor |
+| 4. Agreement | ≥ 24 of 30 match a second reader | not run yet | not run yet | not run yet | PENDING (see Agreement Report) |
+| 5. Confidence | most-confident third ≥ 0.70 and ≥ 0.10 above least-confident third | 0.90 vs 0.10 | 0.90 vs 0.00 | 0.90 vs 0.40 | MET on the numbers, but not trustworthy (see note) |
+
+Criterion 5 note: each third is only 10 posts, and mean confidence when right vs. wrong is nearly equal (0.45 vs 0.42, 0.49 vs 0.44, 0.45 vs 0.41), all close to the 1/3 a three-way guesser would give. The model collapses to `experience_report` in every seed, so the "confident" third is mostly easy `experience_report` posts rather than evidence that its confidence means something.
 
 ### Confusion matrix
 
 <!-- ⚠️ TYPED AS A MARKDOWN TABLE. The notebook prints one ready to paste.
      An image of a matrix earns nothing. -->
 
-| true \ predicted |  |  |  |
+| true \ predicted | experience_report | specific_advice | open_discussion |
 |---|---|---|---|
-| `experience_report` |  |  |  |
-| `specific_advice` |  |  |  |
-| `open_discussion` |  |  |  |
+| **experience_report** | 14 | 0 | 0 |
+| **specific_advice** | 9 | 1 | 0 |
+| **open_discussion** | 6 | 0 | 0 |
 
 **My biggest off-diagonal number, and what it means:**
 <!-- Not "the model made mistakes" — WHICH boundary it didn't learn, and which
      direction. "7 real experience_report posts were called specific_advice and
      only 3 went the other way" is a direction, not just an error rate. -->
+
+9 real `specific_advice` posts were called `experience_report`, and 0 `experience_report` posts were called `specific_advice`, so the model never learned the boundary I named as hardest and errs in only one direction. The 6 `open_discussion` posts were also all called `experience_report`, so the real pattern is that the model defaults to the largest class instead of separating any of the three labels (29 of 30 predictions were `experience_report`).
 
 
 
