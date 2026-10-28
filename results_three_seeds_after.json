@@ -2,19 +2,19 @@
   {
     "seed": 42,
     "n_test": 30,
-    "accuracy": 0.5,
-    "f1_macro": 0.27766032417195213,
+    "accuracy": 0.7,
+    "f1_macro": 0.5132575757575758,
     "per_label": {
       "experience_report": {
-        "precision": 0.4827586206896552,
-        "recall": 1.0,
-        "f1": 0.6511627906976745,
+        "precision": 0.7222222222222222,
+        "recall": 0.9285714285714286,
+        "f1": 0.8125,
         "support": 14
       },
       "specific_advice": {
-        "precision": 1.0,
-        "recall": 0.1,
-        "f1": 0.18181818181818182,
+        "precision": 0.6666666666666666,
+        "recall": 0.8,
+        "f1": 0.7272727272727273,
         "support": 10
       },
       "open_discussion": {
@@ -26,26 +26,26 @@
     },
     "confusion": {
       "experience_report": {
-        "experience_report": 14,
-        "specific_advice": 0,
-        "open_discussion": 0
-      },
-      "specific_advice": {
-        "experience_report": 9,
+        "experience_report": 13,
         "specific_advice": 1,
         "open_discussion": 0
       },
+      "specific_advice": {
+        "experience_report": 2,
+        "specific_advice": 8,
+        "open_discussion": 0
+      },
       "open_discussion": {
-        "experience_report": 6,
-        "specific_advice": 0,
+        "experience_report": 3,
+        "specific_advice": 3,
         "open_discussion": 0
       }
     },
     "confidence": {
-      "mean_when_right": 0.45257261395454407,
-      "mean_when_wrong": 0.42414915561676025,
-      "accuracy_most_confident_third": 0.9,
-      "accuracy_least_confident_third": 0.1,
+      "mean_when_right": 0.7296783924102783,
+      "mean_when_wrong": 0.6114439368247986,
+      "accuracy_most_confident_third": 0.8,
+      "accuracy_least_confident_third": 0.5,
       "n_per_third": 10
     },
     "device": "cpu",
@@ -56,19 +56,19 @@
   {
     "seed": 7,
     "n_test": 30,
-    "accuracy": 0.4666666666666667,
-    "f1_macro": 0.21212121212121213,
+    "accuracy": 0.6666666666666666,
+    "f1_macro": 0.48282828282828283,
     "per_label": {
       "experience_report": {
-        "precision": 0.4666666666666667,
+        "precision": 0.7368421052631579,
         "recall": 1.0,
-        "f1": 0.6363636363636364,
+        "f1": 0.8484848484848485,
         "support": 14
       },
       "specific_advice": {
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0,
+        "precision": 0.6,
+        "recall": 0.6,
+        "f1": 0.6,
         "support": 10
       },
       "open_discussion": {
@@ -85,21 +85,21 @@
         "open_discussion": 0
       },
       "specific_advice": {
-        "experience_report": 10,
-        "specific_advice": 0,
-        "open_discussion": 0
+        "experience_report": 3,
+        "specific_advice": 6,
+        "open_discussion": 1
       },
       "open_discussion": {
-        "experience_report": 6,
-        "specific_advice": 0,
+        "experience_report": 2,
+        "specific_advice": 4,
         "open_discussion": 0
       }
     },
     "confidence": {
-      "mean_when_right": 0.4927736818790436,
-      "mean_when_wrong": 0.442757248878479,
-      "accuracy_most_confident_third": 0.9,
-      "accuracy_least_confident_third": 0.0,
+      "mean_when_right": 0.7450166344642639,
+      "mean_when_wrong": 0.6490324139595032,
+      "accuracy_most_confident_third": 0.8,
+      "accuracy_least_confident_third": 0.5,
       "n_per_third": 10
     },
     "device": "cpu",
@@ -110,19 +110,19 @@
   {
     "seed": 2024,
     "n_test": 30,
-    "accuracy": 0.5333333333333333,
-    "f1_macro": 0.37719298245614036,
+    "accuracy": 0.6333333333333333,
+    "f1_macro": 0.46913580246913583,
     "per_label": {
       "experience_report": {
-        "precision": 0.5,
-        "recall": 0.8571428571428571,
-        "f1": 0.631578947368421,
+        "precision": 0.8461538461538461,
+        "recall": 0.7857142857142857,
+        "f1": 0.8148148148148148,
         "support": 14
       },
       "specific_advice": {
-        "precision": 0.6666666666666666,
-        "recall": 0.4,
-        "f1": 0.5,
+        "precision": 0.47058823529411764,
+        "recall": 0.8,
+        "f1": 0.5925925925925926,
         "support": 10
       },
       "open_discussion": {
@@ -134,24 +134,24 @@
     },
     "confusion": {
       "experience_report": {
-        "experience_report": 12,
-        "specific_advice": 2,
+        "experience_report": 11,
+        "specific_advice": 3,
         "open_discussion": 0
       },
       "specific_advice": {
-        "experience_report": 6,
-        "specific_advice": 4,
+        "experience_report": 2,
+        "specific_advice": 8,
         "open_discussion": 0
       },
       "open_discussion": {
-        "experience_report": 6,
-        "specific_advice": 0,
+        "experience_report": 0,
+        "specific_advice": 6,
         "open_discussion": 0
       }
     },
     "confidence": {
-      "mean_when_right": 0.44661790132522583,
-      "mean_when_wrong": 0.4062044322490692,
+      "mean_when_right": 0.7337225079536438,
+      "mean_when_wrong": 0.5779157280921936,
       "accuracy_most_confident_third": 0.9,
       "accuracy_least_confident_third": 0.4,
       "n_per_third": 10

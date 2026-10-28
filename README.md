@@ -362,21 +362,33 @@ With no disagreements I can't show a pattern. A perfect score on 30 posts is not
 
 ## The Improvement
 
-**What I changed:**
+**What I changed:** One training setting: `EPOCHS` from 3 to 10 in `takemeter.ipynb`. Learning rate (2e-5), batch size (16), `MAX_LENGTH` (128), the data, the labels and the seeds (42, 7, 2024) are unchanged. `RUN_LABEL` is set to `"after"`, so the results are in `results_three_seeds_after.json` and the before numbers are untouched.
 
-**Which diagnosis pointed at it:**
+**Which diagnosis pointed at it:** Criteria 1 and 2 were missed because the model collapsed to the biggest label after only about 27 optimizer steps. I diagnosed this as a training problem rather than a labelling one, because the zero-shot baseline could separate `open_discussion` from its definition alone. More epochs is the direct test of that diagnosis.
 
 ### Run Log — After
 
+| Measure | Seed 42 | Seed 7 | Seed 2024 |
+|---|---|---|---|
+| Overall accuracy | 0.700 | 0.667 | 0.633 |
+| Macro F1 | 0.513 | 0.483 | 0.469 |
+| F1 — `experience_report` | 0.812 | 0.848 | 0.815 |
+| F1 — `specific_advice` | 0.727 | 0.600 | 0.593 |
+| F1 — `open_discussion` | 0.000 | 0.000 | 0.000 |
+
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Overall accuracy | ≥ 0.60 in every seed | 0.700 | 0.667 | 0.633 | MET (was MISSED) |
+| 2. Per-label F1 | ≥ 0.50 for each label in every seed | exp 0.812 / adv 0.727 / disc 0.000 | exp 0.848 / adv 0.600 / disc 0.000 | exp 0.815 / adv 0.593 / disc 0.000 | MISSED (`open_discussion` is still 0.000; `experience_report` and `specific_advice` now pass) |
+| 3. Balance | each label 20–60% of the 200 posts | 93 / 67 / 40 | same data | same data | MET (unchanged; no margin on `open_discussion`) |
+| 4. Agreement | ≥ 24 of 30 match a second reader | 30 / 30 vs. staff | n/a | n/a | MET on a proxy only (unchanged) |
+| 5. Confidence | most-confident third ≥ 0.70 and ≥ 0.10 above the least-confident third | 0.80 vs 0.50 | 0.80 vs 0.50 | 0.90 vs 0.40 | MET (gaps 0.30, 0.30, 0.50) |
 
-**Did it help, and how do I know:**
+**Did it help, and how do I know:** Yes, partly. Accuracy rose in every seed (0.500 → 0.700, 0.467 → 0.667, 0.533 → 0.633), and all three now clear the 0.60 target, so criterion 1 flips from MISSED to MET. Macro F1 rose from 0.278 / 0.212 / 0.377 to 0.513 / 0.483 / 0.469. The model no longer collapses to one label: `specific_advice` F1 went from 0.182 / 0.000 / 0.500 to 0.727 / 0.600 / 0.593, so it is now above the 0.50 floor in every seed, which supports the under-training diagnosis. Confidence also became meaningful: mean confidence when right (0.73–0.75) is now clearly higher than when wrong (0.58–0.65), where before the two were nearly equal.
+
+It did not fix `open_discussion`: F1 is 0.000 in all three seeds, so criterion 2 is still MISSED. In the matrices it never gets more than one `open_discussion` prediction across all three seeds, and its 6 test posts are split between `experience_report` and `specific_advice`. More epochs let the model learn the two bigger labels but not the smallest one (40 posts, 20% of the data, only 6 in each test set), so this is the too-few-examples cause, not a training-length problem.
+
+Caveats: each seed's test set has only 30 posts, so one post is worth 3.3 accuracy points. Accuracy still drifts down across seeds (0.700 → 0.633), a spread of 0.067 that I can't separate from noise. I changed only the epochs, but the device is the same (CPU) so the before/after comparison is like-for-like. I did not test whether 10 is the best number, and I did not check for overfitting beyond the held-out scores.
 
 <!-- If it didn't, say so. Relabelling that didn't help is a genuinely
      interesting result and earns full credit. -->
