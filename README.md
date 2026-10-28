@@ -223,6 +223,12 @@ I expect the trained model to beat the definition-based baseline on `specific_ad
 <!-- If the baseline matched your trained model, your fine-tuning added
      nothing — and that is a real finding, not a failure. Say it plainly. -->
 
+My prediction was wrong. On the same 30 held-out posts, the fine-tuned model did not beat the zero-shot baseline: accuracy was 0.500 vs. 0.533 (one post out of 30, which is noise), and macro F1 was 0.278 vs. 0.508. So, as trained, the fine-tuning added nothing over simply giving a general model my label definitions.
+
+The gap is not a small tie, though. The trained model's confusion matrix shows it labelled 29 of 30 posts `experience_report`, the largest class (46.5% of my data), and got `open_discussion` wrong every time (F1 0.000). Its 0.500 accuracy is barely above always guessing the majority class (14/30 = 0.467). It matched the baseline only on `experience_report` (0.651 vs. 0.645), where predicting everything as that label is rewarded by recall. It did not learn the distinctions my taxonomy depends on. The baseline, which reads the written definitions, at least spreads its predictions across all three labels, which is why it wins on `open_discussion` (0.545) and `specific_advice` (0.333).
+
+The likely cause is too little training data (about 140 training posts, only 40 `open_discussion` in total) and a 128-token limit that truncates long posts, not a flaw in the labels. Neither model is good (both near 50%), and with n=30 each post is worth 3.3 accuracy points, so only the macro F1 and `open_discussion` gaps are large enough to trust. The costs also differ: the baseline takes a few seconds per post on CPU, the trained model is much faster, but that speed is worthless until it stops collapsing to one label.
+
 
 
 ---
