@@ -207,15 +207,17 @@ These eight synthetic posts were generated with AI to test the definitions; they
 
 | Measure | Baseline | Trained | Difference |
 |---|---|---|---|
-| Overall accuracy |  |  |  |
-| Macro F1 |  |  |  |
-| F1 — `experience_report` |  |  |  |
-| F1 — `specific_advice` |  |  |  |
-| F1 — `open_discussion` |  |  |  |
+| Overall accuracy | 0.533 | 0.500 | -0.033 |
+| Macro F1 | 0.508 | 0.278 | -0.230 |
+| F1 — `experience_report` | 0.645 | 0.651 | +0.006 |
+| F1 — `open_discussion` | 0.545 | 0.000 | -0.545 |
+| F1 — `specific_advice` | 0.333 | 0.182 | -0.152 |
 
 **What I predicted before I looked:**
 <!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
      prediction made afterwards isn't one. -->
+
+I expect the trained model to beat the definition-based baseline on `specific_advice` and `open_discussion`, where the task depends on the distinctions in my taxonomy.
 
 **What the gap actually means:**
 <!-- If the baseline matched your trained model, your fine-tuning added
